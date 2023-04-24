@@ -3,6 +3,28 @@
 ## Description
 In this project, the user is able to use a social platform where they can create a thought, have reactions, and even add or delete friends. This application uses insomnia to test the routes such as GET, POST, PUT, and DELETE. These routes apply to every users, thoughts, reactions, and friends.
 
+## User Story
+
+```md
+AS A social media startup
+I WANT an API for my social network that uses a NoSQL database
+SO THAT my website can handle large amounts of unstructured data
+```
+
+## Acceptance Criteria
+
+```md
+GIVEN a social network API
+WHEN I enter the command to invoke the application
+THEN my server is started and the Mongoose models are synced to the MongoDB database
+WHEN I open API GET routes in Insomnia for users and thoughts
+THEN the data for each of these routes is displayed in a formatted JSON
+WHEN I test API POST, PUT, and DELETE routes in Insomnia
+THEN I am able to successfully create, update, and delete users and thoughts in my database
+WHEN I test API POST and DELETE routes in Insomnia
+THEN I am able to successfully create and delete reactions to thoughts and add and remove friends to a user’s friend list
+```
+
 ## How to use
 Once the code is loaded up, simply open up an intergrated terminal and install the required dependencies by using the command `npm i`. After that, use the command `npm start` to initialize the server. Finally, navigate to your insomnia app and text your desired routes. Make sure to use the proper JSON body for POST routes. 
 
