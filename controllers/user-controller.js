@@ -17,7 +17,7 @@ const userController = {
   },
   getUserById: async ({ params }, res) => {
     try {
-      const dbUserData = await User.findOne({ _id: params.id })
+      const dbUserData = await User.findOne({ _id: params.userId })
         .populate({
           path: "thoughts",
           select: "-__v",
@@ -44,7 +44,7 @@ const userController = {
   },
   updateUser: async ({ params, body }, res) => {
     try {
-      const dbUserData = await User.findOneAndUpdate({ _id: params.id }, body, {
+      const dbUserData = await User.findOneAndUpdate({ _id: params.userId }, body, {
         new: true,
         runValidators: true,
       })
@@ -59,14 +59,14 @@ const userController = {
   },
   deleteUser: async ({ params }, res) => {
     try {
-      const dbUserData = await User.findOneAndDelete({ _id: params.id })
+      const dbUserData = await User.findOneAndDelete({ _id: params.userId })
       if (!dbUserData) {
         res.status(404).json({ message: "No user found with this id" });
         return;
       }
       await User.updateMany(
         { _id: { $in: dbUserData.friends } },
-        { $pull: { friends: params.id } }
+        { $pull: { friends: params.userId } }
       )
       await Thought.deleteMany({ username: dbUserData.username })
       res.json({ message: "Successfully deleted user" });
@@ -77,8 +77,8 @@ const userController = {
   addFriend: async ({ params }, res) => {
     try {
       const dbUserData = await User.findByIdAndUpdate(
-        { _id: params.id },
-        { $addToSet: { friends: params.friendId } },
+        params.userId,
+        { $addToSet: { friends: params.friendUserId } },
         { new: true }
       )
         .select("-__v")
@@ -94,7 +94,7 @@ const userController = {
   removeFriend: async ({ params }, res) => {
     try {
       const dbUserData = await User.findByIdAndUpdate(
-        { _id: params.id },
+        { _id: params.userId },
         { $pull: { friends: params.friendId } },
         { new: true, runValidators: true }
       )
